@@ -28,13 +28,16 @@ print(weight_matrix_2)
 print()
 
 print("results")
-output_values1 = np.array([])
-output_values2 = np.array([])
-for vector in input_values:
-    np.append(output_values1, deep_neural_network(vector, weight_matrix_1))
-    np.append(output_values2, deep_neural_network(output_values1, weight_matrix_2))
 
-print(output_values1)
-print()
-print(output_values2)
+for vector in input_values:
+    output_values1 = deep_neural_network(vector, weight_matrix_1)
+    print(output_values1)
+    output_values2 = deep_neural_network(output_values1, weight_matrix_2)
+    print(output_values2)
+    print()
+
+
+# print(output_values1)
+# print()
+# print(output_values2)
 
