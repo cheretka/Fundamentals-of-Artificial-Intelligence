@@ -19,8 +19,7 @@ class NeuralNetwork():
         self.weight_matrix = []
 
         for index in self.n_layers:
-            weight = (2 * random.random((index[1], index[0])) - 1)
-            self.weight_matrix.append(weight)
+            self.weight_matrix.append((2 * random.random((index[1], index[0])) - 1))
 
         print(self.weight_matrix)
 
@@ -28,15 +27,23 @@ class NeuralNetwork():
 
 
     def add_layer(self, n, weight_min_value=-1, weight_max_value=1):
-        # del self.n_layers[-1]
-        self.n_layers[:-1]
-        print(self.n_layers)
-        np.append(self.n_layers, [[self.n_layers[len(self.n_layers)-1][0], n]])
-        print(self.n_layers)
-        # self.n_layers[len(self.n_layers)-1] = [ self.n_layers[len(self.n_layers)-1][0], n]
-        np.append(self.n_layers, [[n, self.num_output]])
-        # self.n_layers.append([n, self.num_output])
-        print(self.n_layers)
+        self.n_layers = self.n_layers[:-1]
+        if len(self.n_layers) > 0:
+            self.n_layers = np.append(self.n_layers, [[self.n_layers[len(self.n_layers)-1][1], n]])
+        else:
+            self.n_layers = np.append(self.n_layers, [[self.num_input, n]])
+        self.n_layers = np.append(self.n_layers, [[n, self.num_output]])
+        self.n_layers = np.reshape(np.array(self.n_layers), (-1, 2))
+        # print(self.n_layers)
+
+        # print(self.weight_matrix)
+        self.weight_matrix = self.weight_matrix[:-1]
+        self.weight_matrix.append(( (abs(weight_min_value) + abs(weight_max_value)) * random.random((self.n_layers[len(self.n_layers)-2][1], self.n_layers[len(self.n_layers)-2][0])) + weight_min_value))
+        self.weight_matrix.append(( 2 * random.random((self.n_layers[len(self.n_layers)-1][1], self.n_layers[len(self.n_layers)-1][0])) -1))
+        # print(self.weight_matrix)
+
+
+
 
 
     def predict(self, input_vector):
@@ -56,14 +63,20 @@ class NeuralNetwork():
 
 
 
+
 if __name__ == "__main__":
 
-    network = NeuralNetwork(4, 3, [2, 3, 4])
+    network = NeuralNetwork(4, 3, [2])
 
     o = network.predict([1, 2, 3, 4])
-    print("o")
+    print("output")
     print(o)
-    network.add_layer(7)
+    print()
+    network.add_layer(7, -20, 20)
+    o = network.predict([1, 2, 3, 4])
+    print("output")
+    print(o)
+    print()
 
 
 
