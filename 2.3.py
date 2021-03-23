@@ -20,19 +20,14 @@ alpha = 0.01
 
 
 
-for i in range(1000):
+
+for i in range(50):
     print(i+1)
     output_value = np.dot(input_values[0], weight_matrix.T)
-    delta = output_value - expected_output[0]
-    weight_delta = delta * input_values[0]
-    print(weight_delta)
-    weight_matrix = weight_matrix - np.dot(alpha, weight_delta)
+    weight_matrix = weight_matrix - np.dot(alpha, np.outer(output_value - expected_output[0], input_values[0]))
 
-    # print("delta " + str(delta))
-    # print("weight_delta " + str(weight_delta))
-    # print("weight " + str(weight_matrix))
+    print("weight " + str(weight_matrix))
     print("output " + str(output_value))
     error = (output_value - expected_output[0]) ** 2
     print("error " + str(error))
-    print()
-
+    print("sum " + str(np.sum(error)))
