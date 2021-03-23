@@ -16,65 +16,15 @@ alpha = 0.01
 
 
 for i in range(100):
-    print(i+1)
-    output_value = np.dot(input_values[0], weight_matrix.T)
-    weight_matrix = weight_matrix - np.dot(alpha, np.outer(output_value - expected_output[0], input_values[0]))
+    er = 0
+    for ind in range(len(input_values)):
+        print(i+1)
+        output_value = np.dot(input_values[ind], weight_matrix.T)
+        weight_matrix = weight_matrix - np.dot(alpha, np.outer(output_value - expected_output[ind], input_values[ind]))
 
-    print("weight " + str(weight_matrix))
-    print("output " + str(output_value))
-    error = (output_value - expected_output[0]) ** 2
-    print("error " + str(error))
-
-
-
-# for i in range(1000):
-#     print(i+1)
-#     output_value = np.dot(input_values, weight_matrix.T)
-#     delta = output_value - expected_output
-#     weight_delta = np.dot(delta, input_values)
-#     weight_matrix = weight_matrix - np.dot(alpha, weight_delta)
-#
-#     # print("delta " + str(delta))
-#     # print("weight_delta " + str(weight_delta))
-#     # print("weight " + str(weight_matrix))
-#     print("output " + str(output_value))
-#     error = (output_value - expected_output) ** 2
-#     print("error " + str(error))
-#     print()
-
-# er = 0
-#
-# for i in range(1000):
-#     print(i+1)
-#     output_value = np.dot(input_values[0], weight_matrix.T)
-#     delta = output_value - expected_output[0]
-#     weight_delta = np.dot(delta, input_values[0])
-#     weight_matrix = weight_matrix - np.dot(alpha, weight_delta)
-#
-#     # print("delta " + str(delta))
-#     # print("weight_delta " + str(weight_delta))
-#     # print("weight " + str(weight_matrix))
-#     print("output " + str(output_value))
-#     error = (output_value - expected_output[0]) ** 2
-#     print("error " + str(error))
-#     er = er + error
-#     print()
-#
-# print(er)
-
-
-# for i in range(1000):
-#     for ind in range(4):
-#         print(i+1)
-#         output_value = np.dot(input_values[ind], weight_matrix)
-#         delta = output_value - expected_output[ind]
-#         weight_delta = np.dot(delta, input_values[ind])
-#         weight_matrix = weight_matrix - np.dot(alpha, weight_delta)
-#
-#         print("delta " + str(delta))
-#         print("weight_delta " + str(weight_delta))
-#         print("weight " + str(weight_matrix))
-#         print("output " + str(output_value))
-#         error = (output_value - expected_output[ind]) ** 2
-#         print("error " + str(error))
-#         print()
+        print("weight " + str(weight_matrix))
+        print("output " + str(output_value))
+        error = (output_value - expected_output[ind]) ** 2
+        print("error " + str(error))
+        er = er + error
+    print("error " + str(er))

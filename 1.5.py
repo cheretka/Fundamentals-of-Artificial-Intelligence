@@ -66,13 +66,13 @@ class NeuralNetwork():
 
 if __name__ == "__main__":
 
-    network = NeuralNetwork(4, 3, [2])
+    network = NeuralNetwork(4, 3, [])
 
     o = network.predict([1, 2, 3, 4])
     print("output")
     print(o)
     print()
-    network.add_layer(7, -20, 20)
+    network.add_layer(5, -20, 20)
     o = network.predict([1, 2, 3, 4])
     print("output")
     print(o)

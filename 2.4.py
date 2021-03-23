@@ -24,7 +24,9 @@ train_data = train_data[:, 0:3]
 input_values = train_data.astype(np.float64)
 ID = ID.astype(np.int_)
 
-for i in range(10):
+
+
+for i in range(4):
     for ind in range(len(ID)):
         # print(i+1)
         expected_output = np.array([0, 0, 0, 0])

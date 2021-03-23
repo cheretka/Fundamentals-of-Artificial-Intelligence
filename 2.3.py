@@ -22,12 +22,18 @@ alpha = 0.01
 
 
 for i in range(50):
-    print(i+1)
-    output_value = np.dot(input_values[0], weight_matrix.T)
-    weight_matrix = weight_matrix - np.dot(alpha, np.outer(output_value - expected_output[0], input_values[0]))
+    er = 0
+    for ind in range(len(input_values)):
+        print(i+1)
+        output_value = np.dot(input_values[ind], weight_matrix.T)
+        weight_matrix = weight_matrix - np.dot(alpha, np.outer(output_value - expected_output[ind], input_values[ind]))
 
-    print("weight " + str(weight_matrix))
-    print("output " + str(output_value))
-    error = (output_value - expected_output[0]) ** 2
-    print("error " + str(error))
-    print("sum " + str(np.sum(error)))
+        print("weight " + str(weight_matrix))
+        print("output " + str(output_value))
+        error = (output_value - expected_output[ind]) ** 2
+        print("error " + str(error))
+        # print("sum " + str(np.sum(error)))
+        er = er + error
+
+    print("error " + str(er))
+    print("error " + str(sum(er)))
