@@ -48,4 +48,5 @@ for iteration in range(50):
 
         error = error + (layer_2_values - expected_output[i]) ** 2
 
+
     print("error " + str(sum(error)))
