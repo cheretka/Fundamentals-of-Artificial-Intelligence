@@ -63,16 +63,13 @@ prawda = 0
 nieprawda = 0
 
 for ind in range(len(ID2)):
-    expected_output = np.array([0, 0, 0, 0])
-    expected_output[ID2[ind] - 1] = 1
-    print("expected_output " + str(expected_output))
+    # expected_output = np.array([0, 0, 0, 0])
+    # expected_output[ID2[ind] - 1] = 1
+    # print("expected_output " + str(expected_output))
+
     output_value = np.dot(input_values[ind], weight_matrix.T)
+
     print("output " + str(output_value))
-    # output_value = output_value.astype(np.int_)
-    # print("output " + str(np.rint(output_value)))
-    # print(expected_output==output_value)
-    # print(ID2[ind])
-    # print(np.argmax(output_value) + 1)
     if ID2[ind] == (np.argmax(output_value) + 1):
         prawda +=1
     else:

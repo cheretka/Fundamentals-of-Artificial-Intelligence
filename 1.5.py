@@ -23,9 +23,6 @@ class NeuralNetwork():
 
         print(self.weight_matrix)
 
-
-
-
     def add_layer(self, n, weight_min_value=-1, weight_max_value=1):
         self.n_layers = self.n_layers[:-1]
         if len(self.n_layers) > 0:
@@ -42,18 +39,11 @@ class NeuralNetwork():
         self.weight_matrix.append(( 2 * random.random((self.n_layers[len(self.n_layers)-1][1], self.n_layers[len(self.n_layers)-1][0])) -1))
         # print(self.weight_matrix)
 
-
-
-
-
     def predict(self, input_vector):
         output = input_vector
 
         for mat in self.weight_matrix:
-            # print(output)
-            # print(mat.T)
             output = np.dot(output, mat.T)
-            # print(output)
 
         return output
 
@@ -73,6 +63,7 @@ if __name__ == "__main__":
     print(o)
     print()
     network.add_layer(5, -20, 20)
+    print(network.weight_matrix)
     o = network.predict([1, 2, 3, 4])
     print("output")
     print(o)
