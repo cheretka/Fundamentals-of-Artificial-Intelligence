@@ -30,7 +30,7 @@ alpha = 0.01
 
 
 
-for iteration in range(50):
+for iteration in range(10000):
     error = 0
 
     for i in range(len(input)):
