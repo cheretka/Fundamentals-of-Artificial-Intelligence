@@ -116,7 +116,7 @@ if __name__ == "__main__":
             print('.')
 
 
-    for ind in range(300):
+    for ind in range(330):
         print(ind)
         for i in range(60000):
 
