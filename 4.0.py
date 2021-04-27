@@ -65,8 +65,10 @@ layer_1_weights = layer_1_weights - np.dot(alpha, layer_1_weight_delta)
 print("layer_1_weights")
 print(layer_1_weights)
 
-
-
+a = (2 * np.random.random((4, 7)) - 1 ) / 10
+b = (2 * np.random.random((1, 4)) - 1 ) / 10
+print(a)
+print(b)
 # for iteration in range(10000):
 #     error = 0
 #
