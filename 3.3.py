@@ -7,58 +7,34 @@ class NeuralNetwork():
 
     def __init__(self, input_neurons, tab_hidden_neurons, output_neurons, alpha):
         self.alpha = alpha
-
         self.layer_1_weights = (2 * np.random.random((tab_hidden_neurons, input_neurons)) - 1 ) / 10
         self.layer_2_weights = (2 * np.random.random((output_neurons, tab_hidden_neurons)) - 1 ) / 10
 
-        print("111111")
-        print(len(self.layer_1_weights))
-        print(len(self.layer_1_weights[0]))
-        print("222222")
-        print(len(self.layer_2_weights))
-        print(len(self.layer_2_weights[0]))
-
-
     def predict(self, input):
-
         layer_1_values = self.relu(np.dot(input, self.layer_1_weights.T))
         layer_2_values = np.dot(layer_1_values, self.layer_2_weights.T)
-
-        # print("--1--")
-        # print(len(layer_1_values))
-        # print(len(layer_1_values[0]))
-        # print("--2--")
-        # print(len(layer_2_values))
-        # print(len(layer_2_values[0]))
-
         return layer_2_values
-
 
     def fit(self, input, expected_output):
 
         layer_1_values = self.relu(np.dot(input, self.layer_1_weights.T))
-        layer_2_values = np.dot(layer_1_values, self.layer_2_weights.T)
 
-        layer_2_delta = layer_2_values - expected_output
-        layer_1_delta = np.dot(layer_2_delta, self.layer_2_weights) * self.relu2deriv(layer_1_values)
+        layer_2_delta = np.dot(layer_1_values, self.layer_2_weights.T) - expected_output
 
-        layer_2_weight_delta = np.outer(layer_2_delta, layer_1_values)
-        layer_1_weight_delta = np.outer(layer_1_delta, input)
+        self.layer_2_weights = self.layer_2_weights - np.dot(self.alpha, (np.outer(layer_2_delta, layer_1_values)))
+        self.layer_1_weights = self.layer_1_weights - np.dot(self.alpha, (np.outer((np.dot(layer_2_delta, self.layer_2_weights) * self.relu2deriv(layer_1_values)), input)))
 
-        self.layer_2_weights = self.layer_2_weights - np.dot(self.alpha, layer_2_weight_delta)
-        self.layer_1_weights = self.layer_1_weights - np.dot(self.alpha, layer_1_weight_delta)
-
-        # print("##1")
-        # print(layer_1_values)
-        # print( len(layer_1_values) )
-        # # print( len(layer_1_values[0]) )
-        # print("##2")
-        # print(layer_2_values)
-        # print(len(layer_2_values))
-        # # print(len(layer_2_values[0]))
-
-
-
+        # layer_1_values = self.relu(np.dot(input, self.layer_1_weights.T))
+        # layer_2_values = np.dot(layer_1_values, self.layer_2_weights.T)
+        #
+        # layer_2_delta = layer_2_values - expected_output
+        # layer_1_delta = np.dot(layer_2_delta, self.layer_2_weights) * self.relu2deriv(layer_1_values)
+        #
+        # layer_2_weight_delta = np.outer(layer_2_delta, layer_1_values)
+        # layer_1_weight_delta = np.outer(layer_1_delta, input)
+        #
+        # self.layer_2_weights = self.layer_2_weights - np.dot(self.alpha, layer_2_weight_delta)
+        # self.layer_1_weights = self.layer_1_weights - np.dot(self.alpha, layer_1_weight_delta)
 
     def relu(self, x):
         return (x > 0) * x
