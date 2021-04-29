@@ -40,7 +40,7 @@ class NeuralNetwork():
 
                 layer_2_delta = (labels[batch_start:batch_end]-layer_2_values) / (batch_size * layer_2_values.shape[0])
 
-                layer_1_delta = layer_2_delta.dot(self.layer_2_weights.T) * self.relu_deriv(layer_1_values)
+                layer_1_delta = layer_2_delta.dot(self.layer_2_weights.T) * self.tanh2deriv(layer_1_values)
                 layer_1_delta *= dropout_mask
 
                 self.layer_2_weights = self.layer_2_weights + self.alpha * layer_1_values.T.dot(layer_2_delta)
