@@ -84,17 +84,49 @@ if __name__ == "__main__":
 
 ######################## train ############################
 
+
+
+
+
+
+    my_rewiews = []
+    numberOfmyRewiews = 0
+    with open("my opinions") as fp:
+        Lines = fp.readlines()
+        for line in Lines:
+            my_rewiews.append(line)
+            numberOfmyRewiews +=1
+    print(numberOfmyRewiews)
+
+
+
+    my_labels = []
+    numberOfmyLabels = 0
+    with open("my labels") as fp:
+        Lines = fp.readlines()
+        for line in Lines:
+            if line == "negative\n":
+                my_labels.append(0)
+            else:
+                my_labels.append(1)
+            numberOfmyLabels +=1
+    print(numberOfmyLabels)
+
+
+
+
+
     print("\n\n\n")
 
     good_points = 0
     bad_points = 0
     licz = 0
-    for k in range(numberOfRewiews_test):
+    for k in range(numberOfmyRewiews):
         wektor = []
         # print(rewiews_test[k])
 
         for i in range(lenInput):
-            if unique_list[i] in rewiews_test[k]:
+            if unique_list[i] in my_rewiews[k]:
                 wektor.append(1)
             else:
                 wektor.append(0)
@@ -102,7 +134,7 @@ if __name__ == "__main__":
         # print(wektor)
         output2 = predict(wektor, layer_1_weights, layer_2_weights)
         output = round(output2[0])
-        if output == labels_test[k]:
+        if output == my_labels[k]:
             good_points += 1
         else:
             bad_points += 1
