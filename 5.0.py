@@ -8,6 +8,9 @@ from keras.datasets import mnist
 
 images, labels = (x_train[0:1000].reshape(1000, 28 * 28) / 255, y_train[0:1000])
 
+print("x_train")
+print(type(x_train))
+
 one_hot_labels = np.zeros((len(labels), 10))
 for i, l in enumerate(labels):
     one_hot_labels[i][l] = 1
@@ -17,6 +20,25 @@ test_images = x_test.reshape(len(x_test), 28 * 28) / 255
 test_labels = np.zeros((len(y_test), 10))
 for i, l in enumerate(y_test):
     test_labels[i][l] = 1
+
+
+print("images")
+print(images.shape)
+print(images)
+print()
+print("labels")
+print(labels.shape)
+print(labels)
+print()
+print("test_images")
+print(test_images.shape)
+print(test_images)
+print()
+print("test_labels")
+print(test_labels.shape)
+print(test_labels)
+
+
 
 
 def tanh(x):
@@ -34,7 +56,7 @@ def softmax(x):
 
 alpha, iterations = (2, 300)
 pixels_per_image, num_labels = (784, 10)
-batch_size = 1
+batch_size = 100
 
 input_rows = 28
 input_cols = 28

@@ -43,6 +43,8 @@ for row_start in range(2):
 image_sections = np.concatenate(sects, axis=0)
 
 kernel_layer = np.dot(image_sections, kernels.T)
+
+
 kernel_layer_flatten = np.concatenate(kernel_layer, axis=None)
 
 layer_2_values = np.dot(kernel_layer_flatten, layer_2_weights.T)

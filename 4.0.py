@@ -34,36 +34,18 @@ layer_2_weights = np.array([[0.3, 1.1, -0.3],
 
 layer_1_values = np.dot(input, layer_1_weights.T)
 layer_1_values = relu(layer_1_values)
-print("layer_1_values")
-print(layer_1_values)
 layer_2_values = np.dot(layer_1_values, layer_2_weights.T)
-print("layer_2_values")
-print(layer_2_values)
-
 
 layer_2_delta = layer_2_values - expected_output
-print("layer_2_delta")
-print(layer_2_delta)
 layer_1_delta = np.dot(layer_2_delta, layer_2_weights)
 layer_1_delta = layer_1_delta * relu_deriv(layer_1_values)
-print("layer_1_delta")
-print(layer_1_delta)
-
 
 layer_2_weight_delta = np.dot(layer_2_delta.T, layer_1_values)
-print("layer_2_weight_delta")
-print(layer_2_weight_delta)
 layer_1_weight_delta = np.dot(layer_1_delta.T, input)
-print("layer_1_weight_delta")
-print(layer_1_weight_delta)
-
 
 layer_2_weights = layer_2_weights - np.dot(alpha, layer_2_weight_delta)
-print("layer_2_weights")
-print(layer_2_weights)
 layer_1_weights = layer_1_weights - np.dot(alpha, layer_1_weight_delta)
-print("layer_1_weights")
-print(layer_1_weights)
+
 
 a = (2 * np.random.random((4, 7)) - 1 ) / 10
 b = (2 * np.random.random((1, 4)) - 1 ) / 10

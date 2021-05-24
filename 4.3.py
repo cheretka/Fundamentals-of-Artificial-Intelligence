@@ -29,14 +29,20 @@ class NeuralNetwork():
                 batch_start, batch_end = ((i * batch_size), ((i + 1) * batch_size))
 
                 input = np.array(images[batch_start:batch_end])
+
+
                 layer_1_values = self.tanh(np.dot(input, self.layer_1_weights))
                 dropout_mask = np.random.randint(2, size=layer_1_values.shape)
-
                 layer_1_values = layer_1_values * (dropout_mask * 2)
                 layer_2_values = self.softmax(np.dot(layer_1_values, self.layer_2_weights))
 
+
+
+
                 for k in range(batch_size):
                     correct_cnt += int(np.argmax(layer_2_values[k:k + 1]) == np.argmax(labels[batch_start + k:batch_start + k + 1]))
+
+
 
                 layer_2_delta = (labels[batch_start:batch_end]-layer_2_values) / (batch_size * layer_2_values.shape[0])
 
@@ -46,6 +52,9 @@ class NeuralNetwork():
                 self.layer_2_weights = self.layer_2_weights + self.alpha * layer_1_values.T.dot(layer_2_delta)
                 self.layer_1_weights = self.layer_1_weights + self.alpha * input.T.dot(layer_1_delta)
 
+
+
+
             test_correct_cnt = 0
 
             for i in range(len(test_images)):
@@ -53,6 +62,8 @@ class NeuralNetwork():
                 layer_1_values = tanh(np.dot(input, self.layer_1_weights))
                 layer_2_values = np.dot(layer_1_values, self.layer_2_weights)
                 test_correct_cnt += int(np.argmax(layer_2_values) == np.argmax(test_labels[i:i + 1]))
+
+
 
             if (j % 10 == 0):
                 sys.stdout.write("\n" + "I:" + str(j) + \
