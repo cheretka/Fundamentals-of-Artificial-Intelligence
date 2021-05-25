@@ -58,12 +58,12 @@ if __name__ == "__main__":
     network = NeuralNetwork(784, 40, 10, 0.01)
 
 
-    file_labels_train = open("train-labels.idx1-ubyte", "rb")
+    file_labels_train = open("../train-labels.idx1-ubyte", "rb")
     print(int.from_bytes(file_labels_train.read(4), "big"))
     print(int.from_bytes(file_labels_train.read(4), "big"))
     print()
 
-    file_images_train = open("train-images.idx3-ubyte", "rb")
+    file_images_train = open("../train-images.idx3-ubyte", "rb")
     print(int.from_bytes(file_images_train.read(4), "big"))
     print(int.from_bytes(file_images_train.read(4), "big"))
     print(int.from_bytes(file_images_train.read(4), "big"))
@@ -108,12 +108,12 @@ if __name__ == "__main__":
 
 
 
-    file_labels_test = open("t10k-labels.idx1-ubyte", "rb")
+    file_labels_test = open("../t10k-labels.idx1-ubyte", "rb")
     print(int.from_bytes(file_labels_test.read(4), "big"))
     print(int.from_bytes(file_labels_test.read(4), "big"))
     print()
 
-    file_images_test = open("t10k-images.idx3-ubyte", "rb")
+    file_images_test = open("../t10k-images.idx3-ubyte", "rb")
     print(int.from_bytes(file_images_test.read(4), "big"))
     print(int.from_bytes(file_images_test.read(4), "big"))
     print(int.from_bytes(file_images_test.read(4), "big"))

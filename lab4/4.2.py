@@ -23,51 +23,47 @@ class NeuralNetwork():
     def fit(self, images, labels, iteration, batch_size, test_images, test_labels):
 
         for j in range(iteration):
-            correct_cnt = 0
+            error, correct_cnt = (0.0000, 0)
 
             for i in range(int(len(images) / batch_size)):
                 batch_start, batch_end = ((i * batch_size), ((i + 1) * batch_size))
 
                 input = np.array(images[batch_start:batch_end])
-
-
-                layer_1_values = self.tanh(np.dot(input, self.layer_1_weights))
+                layer_1_values = self.relu(np.dot(input, self.layer_1_weights))
                 dropout_mask = np.random.randint(2, size=layer_1_values.shape)
+
                 layer_1_values = layer_1_values * (dropout_mask * 2)
-                layer_2_values = self.softmax(np.dot(layer_1_values, self.layer_2_weights))
-
-
-
-
-                for k in range(batch_size):
-                    correct_cnt += int(np.argmax(layer_2_values[k:k + 1]) == np.argmax(labels[batch_start + k:batch_start + k + 1]))
-
-
-
-                layer_2_delta = (labels[batch_start:batch_end]-layer_2_values) / (batch_size * layer_2_values.shape[0])
-
-                layer_1_delta = layer_2_delta.dot(self.layer_2_weights.T) * self.tanh2deriv(layer_1_values)
-                layer_1_delta *= dropout_mask
-
-                self.layer_2_weights = self.layer_2_weights + self.alpha * layer_1_values.T.dot(layer_2_delta)
-                self.layer_1_weights = self.layer_1_weights + self.alpha * input.T.dot(layer_1_delta)
-
-
-
-
-            test_correct_cnt = 0
-
-            for i in range(len(test_images)):
-                input = test_images[i:i + 1]
-                layer_1_values = tanh(np.dot(input, self.layer_1_weights))
                 layer_2_values = np.dot(layer_1_values, self.layer_2_weights)
-                test_correct_cnt += int(np.argmax(layer_2_values) == np.argmax(test_labels[i:i + 1]))
 
+                error = error + np.sum((labels[batch_start:batch_end] - layer_2_values) ** 2)
+                for k in range(batch_size):
+                    correct_cnt += int(np.argmax(layer_2_values[k:k+1]) == np.argmax(labels[batch_start+k:batch_start+k+1]))
 
+                    layer_2_delta = (labels[batch_start:batch_end]-layer_2_values) / batch_size
 
-            if (j % 10 == 0):
-                sys.stdout.write("\n" + "I:" + str(j) + \
+                    layer_1_delta = layer_2_delta.dot(self.layer_2_weights.T) * self.relu_deriv(layer_1_values)
+                    layer_1_delta *= dropout_mask
+
+                    self.layer_2_weights = self.layer_2_weights + self.alpha * layer_1_values.T.dot(layer_2_delta)
+                    self.layer_1_weights = self.layer_1_weights + self.alpha * input.T.dot(layer_1_delta)
+
+            if j % 10 == 0:
+                test_error = 0.0
+                test_correct_cnt = 0
+
+                for i in range(len(test_images)):
+                    input = test_images[i:i + 1]
+                    layer_1_values = self.relu(np.dot(input,self.layer_1_weights))
+                    layer_2_values = np.dot(layer_1_values, self.layer_2_weights)
+
+                    test_error += np.sum((test_labels[i:i + 1] - layer_2_values) ** 2)
+                    test_correct_cnt += int(np.argmax(layer_2_values) == np.argmax(test_labels[i:i + 1]))
+
+                sys.stdout.write("\n" + \
+                                 "I:" + str(j) + \
+                                 " Test-Err:" + str(test_error / float(len(test_images)))[0:5] + \
                                  " Test-Acc:" + str(test_correct_cnt / float(len(test_images))) + \
+                                 " Train-Err:" + str(error / float(len(images)))[0:5] + \
                                  " Train-Acc:" + str(correct_cnt / float(len(images))))
 
 
@@ -84,29 +80,6 @@ class NeuralNetwork():
         return pickle.load(open(file_name, "rb"))
 
 
-    def sigmoid(self, input):
-        return 1/(1 + np.exp(-input))
-
-    def sigmoid2deriv(self, output):
-        return output*(1-output)
-
-
-    def tanh(self, input):
-        return np.tanh(input)
-
-    def tanh2deriv(self, output):
-        return 1 - (output ** 2)
-
-
-    def softmax(self, input):
-        temp = np.exp(input)
-        return temp / np.sum(temp, axis=1, keepdims=True)
-
-    def softmax2deriv(self, output):
-        temp = (output - true)
-        return temp / len(true)
-
-
 
 
 
@@ -114,24 +87,24 @@ class NeuralNetwork():
 if __name__ == "__main__":
 
     input_neurons = 784
-    tab_hidden_neurons = 100
+    tab_hidden_neurons = 40
     output_neurons = 10
-    alpha = 0.02
+    alpha = 0.005
 
     batch_size = tab_hidden_neurons
 
-    number_images_train = 60000
+    number_images_train = 1000
     number_images_test = 10000
     iteration = 350
 
     network = NeuralNetwork(input_neurons, tab_hidden_neurons, output_neurons, alpha)
 
-    file_labels_train = open("train-labels.idx1-ubyte", "rb")
+    file_labels_train = open("../train-labels.idx1-ubyte", "rb")
     print(int.from_bytes(file_labels_train.read(4), "big"))
     print(int.from_bytes(file_labels_train.read(4), "big"))
     print()
 
-    file_images_train = open("train-images.idx3-ubyte", "rb")
+    file_images_train = open("../train-images.idx3-ubyte", "rb")
     print(int.from_bytes(file_images_train.read(4), "big"))
     print(int.from_bytes(file_images_train.read(4), "big"))
     print(int.from_bytes(file_images_train.read(4), "big"))
@@ -161,12 +134,12 @@ if __name__ == "__main__":
     print()
     # print("--------------------------test---------------------------")
 
-    file_labels_test = open("t10k-labels.idx1-ubyte", "rb")
+    file_labels_test = open("../t10k-labels.idx1-ubyte", "rb")
     print(int.from_bytes(file_labels_test.read(4), "big"))
     print(int.from_bytes(file_labels_test.read(4), "big"))
     print()
 
-    file_images_test = open("t10k-images.idx3-ubyte", "rb")
+    file_images_test = open("../t10k-images.idx3-ubyte", "rb")
     print(int.from_bytes(file_images_test.read(4), "big"))
     print(int.from_bytes(file_images_test.read(4), "big"))
     print(int.from_bytes(file_images_test.read(4), "big"))

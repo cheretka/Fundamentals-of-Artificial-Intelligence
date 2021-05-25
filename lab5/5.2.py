@@ -36,12 +36,12 @@ num_kernels = 16
 
 # network = NeuralNetwork(input_neurons, tab_hidden_neurons, output_neurons, alpha)
 
-file_labels_train = open("train-labels.idx1-ubyte", "rb")
+file_labels_train = open("../train-labels.idx1-ubyte", "rb")
 print(int.from_bytes(file_labels_train.read(4), "big"))
 print(int.from_bytes(file_labels_train.read(4), "big"))
 print()
 
-file_images_train = open("train-images.idx3-ubyte", "rb")
+file_images_train = open("../train-images.idx3-ubyte", "rb")
 print(int.from_bytes(file_images_train.read(4), "big"))
 print(int.from_bytes(file_images_train.read(4), "big"))
 print(int.from_bytes(file_images_train.read(4), "big"))
@@ -71,12 +71,12 @@ for i in range(number_images_train):
 print()
 # print("--------------------------test---------------------------")
 
-file_labels_test = open("t10k-labels.idx1-ubyte", "rb")
+file_labels_test = open("../t10k-labels.idx1-ubyte", "rb")
 print(int.from_bytes(file_labels_test.read(4), "big"))
 print(int.from_bytes(file_labels_test.read(4), "big"))
 print()
 
-file_images_test = open("t10k-images.idx3-ubyte", "rb")
+file_images_test = open("../t10k-images.idx3-ubyte", "rb")
 print(int.from_bytes(file_images_test.read(4), "big"))
 print(int.from_bytes(file_images_test.read(4), "big"))
 print(int.from_bytes(file_images_test.read(4), "big"))

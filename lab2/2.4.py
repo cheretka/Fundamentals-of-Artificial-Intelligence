@@ -13,7 +13,7 @@ expected_output[4-1] = 1
 alpha = 0.01
 
 
-infile = open("data_train.txt", 'r')
+infile = open("../data_train.txt", 'r')
 
 train_data = np.array([line.split() for line in infile])
 ID = train_data[:, 3]
@@ -46,7 +46,7 @@ for i in range(4):
 
 
 
-infile2 = open("data_test.txt", 'r')
+infile2 = open("../data_test.txt", 'r')
 
 test_data = np.array([line.split() for line in infile2])
 print(test_data)

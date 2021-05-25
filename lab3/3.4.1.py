@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     all_rewiews = []
     numberOfAllRewiews = 0
-    with open("rewiews.txt") as fp:
+    with open("../rewiews.txt") as fp:
         Lines = fp.readlines()
         for line in Lines:
             all_rewiews.append(line)
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     all_labels = []
     numberOfAllLabels = 0
-    with open("labels.txt") as fp:
+    with open("../labels.txt") as fp:
         Lines = fp.readlines()
         for line in Lines:
             if line == "negative\n":
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     my_rewiews = []
     numberOfmyRewiews = 0
-    with open("my opinions") as fp:
+    with open("../my opinions") as fp:
         Lines = fp.readlines()
         for line in Lines:
             my_rewiews.append(line)
@@ -102,7 +102,7 @@ if __name__ == "__main__":
 
     my_labels = []
     numberOfmyLabels = 0
-    with open("my labels") as fp:
+    with open("../my labels") as fp:
         Lines = fp.readlines()
         for line in Lines:
             if line == "negative\n":

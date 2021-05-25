@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     all_rewiews = []
     numberOfAllRewiews = 0
-    with open("rewiews.txt") as fp:
+    with open("../rewiews.txt") as fp:
         Lines = fp.readlines()
         for line in Lines:
             all_rewiews.append(line)
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     all_labels = []
     numberOfAllLabels = 0
-    with open("labels.txt") as fp:
+    with open("../labels.txt") as fp:
         Lines = fp.readlines()
         for line in Lines:
             if line == "negative\n":
@@ -129,13 +129,13 @@ if __name__ == "__main__":
 
 ######################## test ##################################
 
-    a_file = open("weights1.txt", "w")
+    a_file = open("../weights1.txt", "w")
     for row in network.layer_1_weights:
         np.savetxt(a_file, row)
 
     a_file.close()
 
-    a_file2 = open("weights2.txt", "w")
+    a_file2 = open("../weights2.txt", "w")
     for row in network.layer_2_weights:
         np.savetxt(a_file2, row)
 

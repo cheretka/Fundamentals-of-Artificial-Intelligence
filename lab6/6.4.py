@@ -1,4 +1,4 @@
-
+import copy
 import numpy as np
 from random import randint
 
@@ -23,7 +23,7 @@ wagi = [3, 13, 10, 9, 7, 1, 8, 8, 2, 9]
 wartosci = [266, 442, 671, 526, 388, 245, 210, 145, 126, 322]
 
 number_of_gene = 10
-number_of_chromosome = 8
+number_of_chromosome = 100
 
 population = np.random.randint(2, size=(number_of_chromosome, number_of_gene))
 population = population.tolist()
@@ -45,7 +45,14 @@ for f in range(80):
     print(arr_fitness)
 
     population_new = []
-    population_new.append(population[arr_fitness.index(max(arr_fitness))])
+
+    # elitarnosc
+    temp = copy.deepcopy(population)
+    temp_fit = copy.deepcopy(arr_fitness)
+    for m in range(20):
+        index = temp_fit.index(max(temp_fit))
+        population_new.append(temp.pop(index))
+        temp_fit.pop(index)
 
     # ---------------------------------------------------------------------------------
     print("Selekcja")
@@ -90,7 +97,7 @@ for f in range(80):
     for k in range(1, number_of_chromosome):
         for l in range(number_of_gene):
             los = randint(1, 100)
-            if los <= 5:
+            if los <= 1:
                 population[k][l] = 0 if population[k][l] == 1 else 1
 
     print(population)
