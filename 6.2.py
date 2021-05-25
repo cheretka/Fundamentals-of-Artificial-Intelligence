@@ -22,7 +22,6 @@ population = np.random.randint(2, size=(number_of_chromosome, number_of_gene))
 population = population.tolist()
 print(population)
 
-print("selection")
 
 fitness = []
 for i in population:
@@ -113,8 +112,8 @@ print(wynik)
 a = wynik[0]*8 + wynik[1]*4 + wynik[2]*2 + wynik[3]*1
 b = wynik[4]*8 + wynik[5]*4 + wynik[6]*2 + wynik[7]*1
 sum = 2*(a**2) + b
-print("a " + str(a))
-print("b " + str(b))
+print("a = " + str(a))
+print("b = " + str(b))
 
 
 # 3 15 \ 4 1
